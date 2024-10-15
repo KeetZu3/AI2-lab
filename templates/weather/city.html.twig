@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{# @var miejscowosc \App\Entity\Miejscowosc #}
+{# @var daneMeteorologiczne \App\Entity\DaneMeteorologiczne #}
+
+{% block title %}Weather in {{ miejscowosc.nazwa }}{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Weather in {{ miejscowosc.nazwa }}</h1>
+
+        <ul>
+
+            {% for dane in daneMeteorologiczne %}
+                <li>{{ dane.dataPomiaru|date('d.m.Y') }}: {{ dane.temperaturaWCelsjuszach }}&deg;C</li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
