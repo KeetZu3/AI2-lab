@@ -1,0 +1,11 @@
+# config/validator/Miejscowosc.yaml
+
+App\Entity\Miejscowosc:
+  properties:
+    nazwa:
+      - NotBlank: ~
+      - Length:
+          max: 255
+    data:
+      - NotBlank: ~
+      - Date: ~

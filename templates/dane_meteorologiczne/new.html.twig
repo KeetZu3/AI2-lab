@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DaneMeteorologiczne{% endblock %}
+
+{% block body %}
+    <h1>Create new DaneMeteorologiczne</h1>
+
+    {{ include('dane_meteorologiczne/_form.html.twig') }}
+
+    <a href="{{ path('app_dane_meteorologiczne_index') }}">back to list</a>
+{% endblock %}

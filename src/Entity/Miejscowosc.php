@@ -88,4 +88,9 @@ class Miejscowosc
 
         return $this;
     }
+    // Dodajemy metodę __toString()
+    public function __toString(): string
+    {
+        return $this->nazwa; // Zwracamy nazwę miejscowości jako string
+    }
 }

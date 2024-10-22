@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Miejscowosc{% endblock %}
+
+{% block body %}
+    <h1>Miejscowosc</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ miejscowosc.id }}</td>
+            </tr>
+            <tr>
+                <th>Nazwa</th>
+                <td>{{ miejscowosc.nazwa }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ miejscowosc.data ? miejscowosc.data|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_miejscowosc_index') }}">back to list</a>
+
+    <a href="{{ path('app_miejscowosc_edit', {'id': miejscowosc.id}) }}">edit</a>
+
+    {{ include('miejscowosc/_delete_form.html.twig') }}
+{% endblock %}

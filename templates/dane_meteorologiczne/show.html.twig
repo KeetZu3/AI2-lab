@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DaneMeteorologiczne{% endblock %}
+
+{% block body %}
+    <h1>DaneMeteorologiczne</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dane_meteorologiczne.id }}</td>
+            </tr>
+            <tr>
+                <th>Temperatura_w_celsjuszach</th>
+                <td>{{ dane_meteorologiczne.temperaturaWCelsjuszach }}</td>
+            </tr>
+            <tr>
+                <th>Data_pomiaru</th>
+                <td>{{ dane_meteorologiczne.dataPomiaru ? dane_meteorologiczne.dataPomiaru|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Wilgotnosc</th>
+                <td>{{ dane_meteorologiczne.wilgotnosc }}</td>
+            </tr>
+            <tr>
+                <th>Cisnienie</th>
+                <td>{{ dane_meteorologiczne.cisnienie }}</td>
+            </tr>
+            <tr>
+                <th>Wiatr</th>
+                <td>{{ dane_meteorologiczne.wiatr }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dane_meteorologiczne_index') }}">back to list</a>
+
+    <a href="{{ path('app_dane_meteorologiczne_edit', {'id': dane_meteorologiczne.id}) }}">edit</a>
+
+    {{ include('dane_meteorologiczne/_delete_form.html.twig') }}
+{% endblock %}

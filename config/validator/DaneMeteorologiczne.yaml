@@ -1,0 +1,25 @@
+# config/validator/DaneMeteorologiczne.yaml
+
+App\Entity\DaneMeteorologiczne:
+  properties:
+    data_pomiaru:
+      - NotBlank: ~
+      - DateTime: ~
+    temperatura_w_celsjuszach:
+      - NotBlank: ~
+      - Type: float
+    wilgotnosc:
+      - NotBlank: ~
+      - Range:
+          min: 0
+          max: 100
+    cisnienie:
+      - NotBlank: ~
+      - Range:
+          min: 900
+          max: 1100
+    wiatr:
+      - NotBlank: ~
+      - Range:
+          min: 0
+          max: 200

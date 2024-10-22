@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DaneMeteorologiczne index{% endblock %}
+
+{% block body %}
+    <h1>DaneMeteorologiczne index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Temperatura_w_celsjuszach</th>
+                <th>Data_pomiaru</th>
+                <th>Wilgotnosc</th>
+                <th>Cisnienie</th>
+                <th>Wiatr</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dane_meteorologiczne in dane_meteorologicznes %}
+            <tr>
+                <td>{{ dane_meteorologiczne.id }}</td>
+                <td>{{ dane_meteorologiczne.temperaturaWCelsjuszach }}</td>
+                <td>{{ dane_meteorologiczne.dataPomiaru ? dane_meteorologiczne.dataPomiaru|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ dane_meteorologiczne.wilgotnosc }}</td>
+                <td>{{ dane_meteorologiczne.cisnienie }}</td>
+                <td>{{ dane_meteorologiczne.wiatr }}</td>
+                <td>
+                    <a href="{{ path('app_dane_meteorologiczne_show', {'id': dane_meteorologiczne.id}) }}">show</a>
+                    <a href="{{ path('app_dane_meteorologiczne_edit', {'id': dane_meteorologiczne.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dane_meteorologiczne_new') }}">Create new</a>
+{% endblock %}

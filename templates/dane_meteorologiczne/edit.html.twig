@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DaneMeteorologiczne{% endblock %}
+
+{% block body %}
+    <h1>Edit DaneMeteorologiczne</h1>
+
+    {{ include('dane_meteorologiczne/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_dane_meteorologiczne_index') }}">back to list</a>
+
+    {{ include('dane_meteorologiczne/_delete_form.html.twig') }}
+{% endblock %}
