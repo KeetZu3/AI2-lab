@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/dane/meteorologiczne')]
 class DaneMeteorologiczneController extends AbstractController
 {
     #[Route('/', name: 'app_dane_meteorologiczne_index', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_INDEX')]
     public function index(DaneMeteorologiczneRepository $daneMeteorologiczneRepository): Response
     {
         return $this->render('dane_meteorologiczne/index.html.twig', [
@@ -23,6 +25,7 @@ class DaneMeteorologiczneController extends AbstractController
     }
 
     #[Route('/new', name: 'app_dane_meteorologiczne_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $daneMeteorologiczne = new DaneMeteorologiczne();
@@ -43,6 +46,7 @@ class DaneMeteorologiczneController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_dane_meteorologiczne_show', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_SHOW')]
     public function show(DaneMeteorologiczne $daneMeteorologiczne): Response
     {
         return $this->render('dane_meteorologiczne/show.html.twig', [
@@ -51,6 +55,7 @@ class DaneMeteorologiczneController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_dane_meteorologiczne_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_EDIT')]
     public function edit(Request $request, DaneMeteorologiczne $daneMeteorologiczne, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(DaneMeteorologiczneType::class, $daneMeteorologiczne);
@@ -69,6 +74,7 @@ class DaneMeteorologiczneController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_dane_meteorologiczne_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_MEASUREMENT_DELETE')]
     public function delete(Request $request, DaneMeteorologiczne $daneMeteorologiczne, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$daneMeteorologiczne->getId(), $request->request->get('_token'))) {

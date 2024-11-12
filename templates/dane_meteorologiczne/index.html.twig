@@ -7,15 +7,15 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Temperatura_w_celsjuszach</th>
-                <th>Data_pomiaru</th>
-                <th>Wilgotnosc</th>
-                <th>Cisnienie</th>
-                <th>Wiatr</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Temperatura_w_celsjuszach</th>
+            <th>Data_pomiaru</th>
+            <th>Wilgotnosc</th>
+            <th>Cisnienie</th>
+            <th>Wiatr</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for dane_meteorologiczne in dane_meteorologicznes %}
@@ -27,8 +27,12 @@
                 <td>{{ dane_meteorologiczne.cisnienie }}</td>
                 <td>{{ dane_meteorologiczne.wiatr }}</td>
                 <td>
-                    <a href="{{ path('app_dane_meteorologiczne_show', {'id': dane_meteorologiczne.id}) }}">show</a>
-                    <a href="{{ path('app_dane_meteorologiczne_edit', {'id': dane_meteorologiczne.id}) }}">edit</a>
+                    {% if is_granted('ROLE_DANE_METEOROLOGICZNE_SHOW') %}
+                        <a href="{{ path('app_dane_meteorologiczne_show', {'id': dane_meteorologiczne.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_DANE_METEOROLOGICZNE_EDIT') %}
+                        <a href="{{ path('app_dane_meteorologiczne_edit', {'id': dane_meteorologiczne.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -39,5 +43,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_dane_meteorologiczne_new') }}">Create new</a>
+    {% if is_granted('ROLE_DANE_METEOROLOGICZNE_NEW') %}
+        <a href="{{ path('app_dane_meteorologiczne_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

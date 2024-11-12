@@ -4,28 +4,50 @@ namespace App\DataFixtures;
 
 use App\Entity\Miejscowosc;
 use App\Entity\DaneMeteorologiczne;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        // Dodaj miasto Szczecin
+        // Dodawanie przykładowego użytkownika z rolą ADMIN
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword($this->passwordHasher->hashPassword($admin, 'secure_password')); // hasło użytkownika
+        $manager->persist($admin);
+
+        // Dodawanie przykładowego użytkownika z rolą USER
+        $user = new User();
+        $user->setUsername('user1');
+        $user->setRoles(['ROLE_USER']); // Zmieniamy rolę na ROLE_USER
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'user1_password')); // hasło użytkownika
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setUsername('user2');
+        $user->setRoles(['ROLE_USER2']); // Zmieniamy rolę na ROLE_USER
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'user2_password')); // hasło użytkownika
+        $manager->persist($user);
+
+        // Dodawanie danych o miastach i pomiarach
         $szczecin = new Miejscowosc();
         $szczecin->setNazwa('Szczecin');
-        $szczecin->setData(new \DateTime());  // ustaw aktualną datę
+        $szczecin->setData(new \DateTime());
         $manager->persist($szczecin);
 
-        // Dodaj miasto Police
-        $police = new Miejscowosc();
-        $police->setNazwa('Police');
-        $police->setData(new \DateTime());  // ustaw aktualną datę
-        $manager->persist($police);
-
-        // Przykładowe dane meteorologiczne dla Szczecina
         $daneSzczecin = new DaneMeteorologiczne();
-        $daneSzczecin->setLocation($szczecin); // Ustaw relację z Miejscowosc
+        $daneSzczecin->setLocation($szczecin);
         $daneSzczecin->setTemperaturaWCelsjuszach(15.0);
         $daneSzczecin->setDataPomiaru(new \DateTime());
         $daneSzczecin->setWilgotnosc(80);
@@ -33,17 +55,6 @@ class AppFixtures extends Fixture
         $daneSzczecin->setWiatr(10);
         $manager->persist($daneSzczecin);
 
-        // Przykładowe dane meteorologiczne dla Police
-        $danePolice = new DaneMeteorologiczne();
-        $danePolice->setLocation($police); // Ustaw relację z Miejscowosc
-        $danePolice->setTemperaturaWCelsjuszach(16.5);
-        $danePolice->setDataPomiaru(new \DateTime());
-        $danePolice->setWilgotnosc(75);
-        $danePolice->setCisnienie(1015);
-        $danePolice->setWiatr(12);
-        $manager->persist($danePolice);
-
-        // Zapisz zmiany do bazy danych
         $manager->flush();
     }
 }

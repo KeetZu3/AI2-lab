@@ -10,11 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/miejscowosc')]
 class MiejscowoscController extends AbstractController
 {
     #[Route('/', name: 'app_miejscowosc_index', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCATION_INDEX')]
+   # #[IsGranted('ROLE_ADMIN')]
     public function index(MiejscowoscRepository $miejscowoscRepository): Response
     {
         return $this->render('miejscowosc/index.html.twig', [
@@ -23,6 +26,7 @@ class MiejscowoscController extends AbstractController
     }
 
     #[Route('/new', name: 'app_miejscowosc_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LOCATION_NEW')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $miejscowosc = new Miejscowosc();
@@ -43,6 +47,7 @@ class MiejscowoscController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_miejscowosc_show', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCATION_SHOW')]
     public function show(Miejscowosc $miejscowosc): Response
     {
         return $this->render('miejscowosc/show.html.twig', [
@@ -51,6 +56,7 @@ class MiejscowoscController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_miejscowosc_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LOCATION_EDIT')]
     public function edit(Request $request, Miejscowosc $miejscowosc, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MiejscowoscType::class, $miejscowosc);
@@ -69,6 +75,7 @@ class MiejscowoscController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_miejscowosc_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_LOCATION_DELETE')]
     public function delete(Request $request, Miejscowosc $miejscowosc, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$miejscowosc->getId(), $request->request->get('_token'))) {

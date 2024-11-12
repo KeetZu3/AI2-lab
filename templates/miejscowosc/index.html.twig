@@ -7,12 +7,12 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nazwa</th>
-                <th>Data</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nazwa</th>
+            <th>Data</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for miejscowosc in miejscowoscs %}
@@ -21,8 +21,12 @@
                 <td>{{ miejscowosc.nazwa }}</td>
                 <td>{{ miejscowosc.data ? miejscowosc.data|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_miejscowosc_show', {'id': miejscowosc.id}) }}">show</a>
-                    <a href="{{ path('app_miejscowosc_edit', {'id': miejscowosc.id}) }}">edit</a>
+                    {% if is_granted('ROLE_MIEJSCOWOSC_SHOW') %}
+                        <a href="{{ path('app_miejscowosc_show', {'id': miejscowosc.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_MIEJSCOWOSC_EDIT') %}
+                        <a href="{{ path('app_miejscowosc_edit', {'id': miejscowosc.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -33,5 +37,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_miejscowosc_new') }}">Create new</a>
+    {% if is_granted('ROLE_MIEJSCOWOSC_NEW') %}
+        <a href="{{ path('app_miejscowosc_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}
