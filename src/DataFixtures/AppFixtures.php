@@ -48,12 +48,27 @@ class AppFixtures extends Fixture
 
         $daneSzczecin = new DaneMeteorologiczne();
         $daneSzczecin->setLocation($szczecin);
-        $daneSzczecin->setTemperaturaWCelsjuszach(15.0);
+        $daneSzczecin->setTemperaturaWCelsjuszach(10.0);
         $daneSzczecin->setDataPomiaru(new \DateTime());
         $daneSzczecin->setWilgotnosc(80);
         $daneSzczecin->setCisnienie(1013);
         $daneSzczecin->setWiatr(10);
         $manager->persist($daneSzczecin);
+
+        // Dodawanie danych o miastach i pomiarach
+        $police = new Miejscowosc();
+        $police->setNazwa('Police');
+        $police->setData(new \DateTime());
+        $manager->persist($police);
+
+        $danePolice = new DaneMeteorologiczne();
+        $danePolice->setLocation($police);
+        $danePolice->setTemperaturaWCelsjuszach(6.0);
+        $danePolice->setDataPomiaru(new \DateTime());
+        $danePolice->setWilgotnosc(62);
+        $danePolice->setCisnienie(1017);
+        $danePolice->setWiatr(16);
+        $manager->persist($danePolice);
 
         $manager->flush();
     }
