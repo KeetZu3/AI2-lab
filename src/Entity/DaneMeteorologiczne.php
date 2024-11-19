@@ -110,4 +110,9 @@ class DaneMeteorologiczne
 
         return $this;
     }
+    public function getFahrenheit(): ?float
+    {
+        $temperatureC = $this->getTemperaturaWCelsjuszach();
+        return ($temperatureC *9/5)+32;
+    }
 }

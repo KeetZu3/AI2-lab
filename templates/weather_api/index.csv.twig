@@ -1,0 +1,6 @@
+City,Temperature,Fahrenheit,Humidity,Pressure,Wind,Measurement Date
+{{ "\n"|nl2br}}
+{% for data in weatherData %}
+{{ city }},{{ data.temperaturaWCelsjuszach }},{{ data.fahrenheit }},{{ data.wilgotnosc }},{{ data.cisnienie }},{{ data.wiatr }},{{ data.dataPomiaru|date('Y-m-d H:i:s') }}
+{{ "\n"|nl2br}}
+{% endfor %}

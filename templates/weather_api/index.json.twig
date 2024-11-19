@@ -1,0 +1,16 @@
+{
+    "city": "{{ city }}",
+    "data": [
+        {% for data in weatherData %}
+        {
+            "temperature": "{{ data.temperaturaWCelsjuszach }}",
+            "fahrenheit": "{{ data.fahrenheit }}",
+            "humidity": "{{ data.wilgotnosc }}",
+            "pressure": "{{ data.cisnienie }}",
+            "wind": "{{ data.wiatr }}",
+            "measurement_date": "{{ data.dataPomiaru|date('Y-m-d H:i:s') }}"
+        }
+        {% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
